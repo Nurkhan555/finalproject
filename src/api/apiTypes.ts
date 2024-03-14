@@ -51,5 +51,37 @@ export namespace ApiTypes {
             error: string;
         }
     }
+    export namespace AuthMe {
+        export namespace Post {
+            export type Req = {
+
+            }
+            export type Resp = {
+                _id: string;
+                email: string;
+                name: string;
+                avatar?: string;
+                publicCardPacksCount: number; // количество колод
+
+                created: Date;
+                updated: Date;
+                isAdmin: boolean;
+                verified: boolean; // подтвердил ли почту
+                rememberMe: boolean;
+
+                error?: string;
+            }
+        }
+        export namespace Put {
+            export type Req = {
+                name: string,
+                avatar: string // url or base64
+            }
+            export type Resp = {
+                updatedUser: Login.Resp
+                error?: string
+            }
+        }
+    }
 }
 

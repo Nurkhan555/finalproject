@@ -1,0 +1,24 @@
+.table{
+    margin-top:20px;
+    width: 100%;
+    border-spacing: 0;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.table tr{
+    height: 48px;
+}
+
+.body td{
+    text-align: center;
+}
+
+.head{
+    background-color: #ECECF9;
+}
+
+.body tr:nth-child(even){
+    background-color: #F8F7FD;
+}
+
+

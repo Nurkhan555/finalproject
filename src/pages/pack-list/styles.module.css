@@ -1,0 +1,39 @@
+.container{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cart{
+    width: 85%;
+    height: 85%;
+    border-radius: 30px;
+    background-color: white;
+    display: flex;
+}
+
+.sidebar{
+    width: 25%;
+    height: 100%;
+}
+.content{
+    width: 75%;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+.title{
+    font-size: 22px;
+    font-weight: 600;
+}
+.search{
+    display: flex;
+    justify-content: space-between;
+    gap: 4px;
+}
+.addButton{
+    min-width: 150px;
+    padding: 0 12px;
+}
+
