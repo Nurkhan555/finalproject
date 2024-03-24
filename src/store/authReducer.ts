@@ -1,4 +1,4 @@
-import {forgotPassword, login, registration} from "../api/auth.ts";
+import {login, registration} from "../api/auth.ts";
 import {NavigateFunction} from "react-router-dom";
 import {ApiTypes} from "../api/apiTypes.ts";
 import {Dispatch} from "redux";
@@ -15,18 +15,15 @@ type ForgotPasswordAT = {
 
 type ActionType = LoginAT | ForgotPasswordAT
 
-type InitialStateAuth = {
+export type InitialStateAuth = {
     isAuth: boolean,
-    user: ApiTypes.Login.Resp | null
+    user: ApiTypes.Login.Resp
 }
 
 const initialState:InitialStateAuth = {
     isAuth: false,
-    user: null,
+    user: {}as ApiTypes.Login.Resp,
 }
-
-
-
 
 export const authReducer = (state=initialState, action: ActionType)=> {
     switch(action.type) {
@@ -55,11 +52,12 @@ export const registerTC = (body:{email: string, password: string}, navigate: Nav
         }
     }
 }
-export const loginTC = (data:ApiTypes.Login.Req) =>{
+export const loginTC = (data:ApiTypes.Login.Req, navigate:NavigateFunction) =>{
     return async (dispatch: Dispatch) => {
         try{
             const response= await login(data)
-            dispatch(loginAC(response))
+            dispatch(loginAC(response.data))
+            navigate('/pack-list')
         }
         catch (e){
             console.error(e)
@@ -67,13 +65,13 @@ export const loginTC = (data:ApiTypes.Login.Req) =>{
     }
 }
 
-export const forgotPasswordTC = (body: {email:string},) =>{
-    return async () =>{
-        try{
-            await forgotPassword(body)
-        }
-        catch (e){
-            console.error(e)
-        }
-    }
-}
+// export const forgotPasswordTC = (body: {email:string},) =>{
+//     return async () =>{
+//         try{
+//              await forgotPassword(body)
+//         }
+//         catch (e){
+//             console.error(e)
+//         }
+//     }
+// }

@@ -1,12 +1,11 @@
-
 export namespace ApiTypes {
     export namespace Login {
         export type Req = {
             email: string
             password: string
-            rememberMe: boolean
+            rememberMe?: boolean
         }
-        export type Resp = 	{
+        export type Resp = {
             _id: string;
             email: string;
             name: string;
@@ -53,9 +52,7 @@ export namespace ApiTypes {
     }
     export namespace AuthMe {
         export namespace Post {
-            export type Req = {
-
-            }
+            export type Req = {}
             export type Resp = {
                 _id: string;
                 email: string;
@@ -83,5 +80,19 @@ export namespace ApiTypes {
             }
         }
     }
+    export namespace Packs {
+        export namespace Get {
+            export type Query = {
+                packName?: string;
+                min?: number
+                max?: number
+                sortPacks?: number
+                page?: number
+                pageCount?: number
+                user_id?: string
+            }
+        }
+    }
 }
+
 

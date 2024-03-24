@@ -28,7 +28,6 @@ export const Register = () => {
         else {
             setError("confirmPassword", {message: "confirm password is invalid"})
         }
-
     }
 
 

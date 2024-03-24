@@ -3,12 +3,13 @@ import {Button} from "../../components/Button";
 import {useForm} from "react-hook-form";
 import {useDispatch} from "react-redux";
 import {loginTC} from "../../store/authReducer.ts";
+import {useNavigate} from "react-router-dom";
 
 
 type LoginInputsFields = {
     email:string;
     password:string;
-    rememberMe:boolean;
+    rememberMe?:boolean;
 }
 
 
@@ -18,8 +19,9 @@ export const Login = () => {
 
     const {register, handleSubmit, formState:{errors}} = useForm<LoginInputsFields>()
 
+    const navigate= useNavigate()
     const onSubmit = (data:LoginInputsFields) =>{
-        dispatch(loginTC(data))
+        dispatch(loginTC(data,navigate))
     }
     const showPassword=(id:string)=>{
         const x = document.getElementById(id) as HTMLInputElement;

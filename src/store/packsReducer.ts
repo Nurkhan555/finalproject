@@ -7,13 +7,24 @@ type GetPacksAT = {
     packs: any
 }
 
-type ActionType = GetPacksAT
-
-
-const initialState = {
-    packs: null,
-
+type SetFilter = {
+    type:'SET_FILTER',
+    filter: Filter
 }
+
+export type Filter = 'my' | 'all';
+
+type InitialState = {
+    packs: null,
+    filter: Filter
+}
+
+const initialState:InitialState = {
+    packs: null,
+    filter: 'all'
+}
+
+type ActionType = GetPacksAT | SetFilter
 
 export const packsReducer = (state = initialState, action:ActionType) => {
     switch (action.type) {
@@ -23,10 +34,20 @@ export const packsReducer = (state = initialState, action:ActionType) => {
                 packs: action.packs
             }
         }
+        case "SET_FILTER":{
+            return {
+                ...state,
+                filter: action.filter
+            }
+        }
     }
     return state
 }
 
+
+export const setFilterAC = (filter:Filter) =>{
+    return {type:'SET_FILTER', filter}
+}
 const getPacksAC = (packs: any) => {
     return {type: "SET_PACKS", packs}
 }
