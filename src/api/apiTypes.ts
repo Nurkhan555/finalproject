@@ -5,6 +5,7 @@ export namespace ApiTypes {
             password: string
             rememberMe?: boolean
         }
+
         export type Resp = {
             _id: string;
             email: string;
@@ -17,6 +18,9 @@ export namespace ApiTypes {
             verified: boolean;
             rememberMe: boolean;
             error?: string;
+            __v: number,
+            token: string,
+            tokenDeathTime: number
         }
     }
     export namespace Register {
@@ -91,8 +95,39 @@ export namespace ApiTypes {
                 pageCount?: number
                 user_id?: string
             }
+            export type CardPack = {
+                _id: string,
+                user_id: string,
+                user_name: string,
+                "private": boolean,
+                "name": string,
+                "path": string,
+                "grade": number,
+                "shots": number,
+                "cardsCount": number,
+                "type": string,
+                "rating": number,
+                "created": string,
+                "updated": string,
+                "more_id": string,
+                "__v": number,
+                "deckCover": null
+            }
+
+            export type Resp = {
+                "cardPacks": CardPack[],
+                "page": number,
+                "pageCount": number,
+                "cardPacksTotalCount": number,
+                "minCardsCount": number,
+                "maxCardsCount": number,
+                "token": string,
+                "tokenDeathTime": number
+            }
+
         }
     }
 }
+
 
 

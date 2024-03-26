@@ -56,6 +56,8 @@ export const loginTC = (data:ApiTypes.Login.Req, navigate:NavigateFunction) =>{
     return async (dispatch: Dispatch) => {
         try{
             const response= await login(data)
+            localStorage.setItem("userId",response.data._id)
+            localStorage.setItem("userToken",response.data.token)
             dispatch(loginAC(response.data))
             navigate('/pack-list')
         }

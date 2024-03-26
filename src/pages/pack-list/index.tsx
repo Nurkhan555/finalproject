@@ -3,27 +3,28 @@ import {Input} from "../../components/Input";
 import {Button} from "../../components/Button";
 import {Table} from "../../components/Table";
 import {Sidebar} from "../../components/Sidebar";
-import {getPacksTC} from "../../store/packsReducer.ts";
+import {getPacksTC, InitialPacksState} from "../../store/packsReducer.ts";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../store";
 import {useEffect} from "react";
-import {InitialStateAuth} from "../../store/authReducer.ts";
+
+
 
 export const PackList = () => {
-    const {user} = useSelector<AppStateType, InitialStateAuth>(({auth}) => {
-        return auth
+    const {packs} = useSelector<AppStateType, InitialPacksState>(({packs}) => {
+        return packs
     })
 
     const dispatch = useDispatch<any>()
 
     useEffect(() => {
-        if (user && user?._id) {
-            console.log("useEffect")
-            dispatch(getPacksTC({}))
+        const userId = localStorage.getItem('userId')
+        if (userId) {
+            dispatch(getPacksTC({
+                // user_id:userId
+            }))
         }
-    }, [user?._id])
-
-    console.log(user)
+    }, [])
 
     return (
         <div className={styles.container}>
@@ -35,7 +36,7 @@ export const PackList = () => {
                         <Input/>
                         <Button className={styles.addButton} variant={"primary"}>Add new pack-list</Button>
                     </div>
-                    <Table/>
+                    <Table packs={packs}/>
                 </div>
             </div>
         </div>

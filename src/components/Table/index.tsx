@@ -1,57 +1,38 @@
 import styles from "./styles.module.css"
+import {ApiTypes} from "../../api/apiTypes.ts";
 
-export const Table = () => {
+type Props = {
+    packs: null | ApiTypes.Packs.Get.Resp
+}
+export const Table = ({packs}: Props) => {
+
     return (
         <table className={styles.table}>
             <thead className={styles.head}>
-                <tr>
-                    <th>Name</th>
-                    <th>Cards</th>
-                    <th>Last Updated</th>
-                    <th>Created by</th>
-                    <th>Actions</th>
-                </tr>
+            <tr>
+                <th>Name</th>
+                <th>Cards</th>
+                <th>Last Updated</th>
+                <th>Created by</th>
+                <th>Actions</th>
+            </tr>
             </thead>
             <tbody className={styles.body}>
-                <tr>
-                    <td>Pack Name</td>
-                    <td>4</td>
-                    <td>18.03.2021</td>
-                    <td>Ivan Ivanov</td>
-                    <td>
-                     <button>Delete</button>
-                     <button>Edit</button>
-                     <button>Learn</button>
-                   </td>
-            </tr>
-            <tr>
-                <td>Name Pack</td>
-                <td>37</td>
-                <td>19.03.2021</td>
-                <td>Petr Petrov</td>
-                <td>
-                    <button>Learn</button>
-                </td>
-            </tr>
 
-                <tr>
-                    <td>Name Pack</td>
-                    <td>37</td>
-                    <td>19.03.2021</td>
-                    <td>Petr Petrov</td>
-                    <td>
-                        <button>Learn</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Pack Name</td>
-                    <td>37</td>
-                    <td>19.03.2021</td>
-                    <td>Petr Petrov</td>
-                    <td>
-                        <button>Learn</button>
-                    </td>
-                </tr>
+            {packs?.cardPacks.map((cardPack) => {
+                    return <tr>
+                        <td>{cardPack.name}</td>
+                        <td>{cardPack.cardsCount}</td>
+                        <td>{cardPack.updated}</td>
+                        <td>{cardPack.user_name}</td>
+                        <td>
+                            <button>Delete</button>
+                            <button>Edit</button>
+                            <button>Learn</button>
+                        </td>
+                    </tr>
+                })
+            }
             </tbody>
         </table>
     );

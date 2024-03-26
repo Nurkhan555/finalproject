@@ -4,7 +4,7 @@ import {Dispatch} from "redux";
 
 type GetPacksAT = {
     type: "SET_PACKS",
-    packs: any
+    packs: ApiTypes.Packs.Get.Resp
 }
 
 type SetFilter = {
@@ -14,12 +14,12 @@ type SetFilter = {
 
 export type Filter = 'my' | 'all';
 
-type InitialState = {
-    packs: null,
+export type InitialPacksState = {
+    packs: null | ApiTypes.Packs.Get.Resp,
     filter: Filter
 }
 
-const initialState:InitialState = {
+const initialState:InitialPacksState = {
     packs: null,
     filter: 'all'
 }
@@ -48,7 +48,7 @@ export const packsReducer = (state = initialState, action:ActionType) => {
 export const setFilterAC = (filter:Filter) =>{
     return {type:'SET_FILTER', filter}
 }
-const getPacksAC = (packs: any) => {
+const getPacksAC = (packs: ApiTypes.Packs.Get.Resp) => {
     return {type: "SET_PACKS", packs}
 }
 
