@@ -1,4 +1,4 @@
-import {getPacks} from "../api/packs.ts";
+import {createPack, getPacks} from "../api/packs.ts";
 import {ApiTypes} from "../api/apiTypes.ts";
 import {Dispatch} from "redux";
 
@@ -8,7 +8,7 @@ type GetPacksAT = {
 }
 
 type SetFilter = {
-    type:'SET_FILTER',
+    type: 'SET_FILTER',
     filter: Filter
 }
 
@@ -19,14 +19,14 @@ export type InitialPacksState = {
     filter: Filter
 }
 
-const initialState:InitialPacksState = {
+const initialState: InitialPacksState = {
     packs: null,
     filter: 'all'
 }
 
 type ActionType = GetPacksAT | SetFilter
 
-export const packsReducer = (state = initialState, action:ActionType) => {
+export const packsReducer = (state = initialState, action: ActionType) => {
     switch (action.type) {
         case "SET_PACKS": {
             return {
@@ -34,7 +34,7 @@ export const packsReducer = (state = initialState, action:ActionType) => {
                 packs: action.packs
             }
         }
-        case "SET_FILTER":{
+        case "SET_FILTER": {
             return {
                 ...state,
                 filter: action.filter
@@ -45,21 +45,31 @@ export const packsReducer = (state = initialState, action:ActionType) => {
 }
 
 
-export const setFilterAC = (filter:Filter) =>{
-    return {type:'SET_FILTER', filter}
+export const setFilterAC = (filter: Filter) => {
+    return {type: 'SET_FILTER', filter}
 }
 const getPacksAC = (packs: ApiTypes.Packs.Get.Resp) => {
     return {type: "SET_PACKS", packs}
 }
 
-export const getPacksTC = (query:ApiTypes.Packs.Get.Query) => {
-    return async(dispatch:Dispatch)=> {
-        try{
+export const getPacksTC = (query: ApiTypes.Packs.Get.Query) => {
+    return async (dispatch: Dispatch) => {
+        try {
             const res = await getPacks(query)
             dispatch(getPacksAC(res.data))
-        }
-        catch (error){
+        } catch (error) {
             console.error(error)
+        }
+    }
+}
+
+export const createPackTC = (body: ApiTypes.Packs.Post.Req) => {
+    return async (dispatch: Dispatch) => {
+        try {
+            await createPack(body)
+            dispatch<any>(getPacksTC({}))
+        } catch (e) {
+            console.error(e)
         }
     }
 }

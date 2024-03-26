@@ -20,5 +20,11 @@
 .input:focus{
     outline: none;
 }
-
+.label{
+    display: flex;
+    flex-direction: column;
+}
+.label>div{
+    display: flex;
+}
 

@@ -113,7 +113,6 @@ export namespace ApiTypes {
                 "__v": number,
                 "deckCover": null
             }
-
             export type Resp = {
                 "cardPacks": CardPack[],
                 "page": number,
@@ -124,8 +123,22 @@ export namespace ApiTypes {
                 "token": string,
                 "tokenDeathTime": number
             }
-
         }
+        export namespace Post {
+            export type Req = {
+                cardsPack: {
+                    name: string  // если не отправить будет таким
+                    path?: string// если не отправить будет такой
+                    grade?: number // не обязателен
+                    shots?: number // не обязателен
+                    rating?: number // не обязателен
+                    deckCover: string // не обязателен
+                    private: boolean // если не отправить будет такой
+                    type?: string // если не отправить будет таким
+                }
+            }
+        }
+
     }
 }
 

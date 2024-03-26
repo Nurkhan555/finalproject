@@ -47,7 +47,6 @@ export const Login = () => {
                                    {...register("email")}
                             />
                         </label>
-
                         <label htmlFor="password" className={styles.label}>
                             Password
                             <div>
