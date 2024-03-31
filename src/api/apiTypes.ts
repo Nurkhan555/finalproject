@@ -139,6 +139,19 @@ export namespace ApiTypes {
             }
         }
 
+        export namespace Delete {
+            export type Query = {
+                id: string
+            }
+        }
+        export namespace Put {
+            export type Req = {
+                cardsPack: {
+                    _id: string,
+                    name?: string
+                }
+            }
+        }
     }
 }
 

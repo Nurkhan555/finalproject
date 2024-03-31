@@ -1,4 +1,4 @@
-import {createPack, getPacks} from "../api/packs.ts";
+import {createPack, deletePack, getPacks, updatePack} from "../api/packs.ts";
 import {ApiTypes} from "../api/apiTypes.ts";
 import {Dispatch} from "redux";
 
@@ -67,6 +67,28 @@ export const createPackTC = (body: ApiTypes.Packs.Post.Req) => {
     return async (dispatch: Dispatch) => {
         try {
             await createPack(body)
+            dispatch<any>(getPacksTC({}))
+        } catch (e) {
+            console.error(e)
+        }
+    }
+}
+
+export const deletePackTC = (query: ApiTypes.Packs.Delete.Query) => {
+    return async (dispatch: Dispatch) => {
+        try {
+            await deletePack(query)
+            dispatch<any>(getPacksTC({}))
+        } catch (e) {
+            console.error(e)
+        }
+    }
+}
+
+export const updatePackTC = (body: ApiTypes.Packs.Put.Req) => {
+    return async (dispatch: Dispatch) => {
+        try {
+            await updatePack(body)
             dispatch<any>(getPacksTC({}))
         } catch (e) {
             console.error(e)

@@ -20,3 +20,23 @@ export const createPack = (body: ApiTypes.Packs.Post.Req) => {
         }
     })
 }
+
+export const deletePack = (query: ApiTypes.Packs.Delete.Query) => {
+    const token = localStorage.getItem("userToken")
+    return $api.delete<ApiTypes.Packs.Delete.Query>("/cards/pack", {
+        params: query,
+        headers: {
+            Authorization: 'Bearer ' + token
+        }
+    })
+}
+
+export const updatePack = (body: ApiTypes.Packs.Put.Req )=>{
+    const token = localStorage.getItem("userToken")
+    return $api.put<ApiTypes.Packs.Put.Req>("/cards/pack", body,{
+        headers: {
+            Authorization: 'Bearer ' + token
+        }
+    })
+}
+

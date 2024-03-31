@@ -1,13 +1,19 @@
 import styles from "./styles.module.css"
 import {ApiTypes} from "../../api/apiTypes.ts";
+// import {Fragment} from "react";
+
 
 type Props = {
     packs: null | ApiTypes.Packs.Get.Resp
+    onDelete: (packId:string)=>void
+    onEdit: (packId:string)=>void
 }
-export const Table = ({packs}: Props) => {
+export const Table = ({packs, onDelete, onEdit}: Props) => {
+
+    // const userId = localStorage.getItem("userId")
 
     return (
-        <table className={styles.table}>
+        <table className={styles.table} >
             <thead className={styles.head}>
             <tr>
                 <th>Name</th>
@@ -19,19 +25,23 @@ export const Table = ({packs}: Props) => {
             </thead>
             <tbody className={styles.body}>
 
-            {packs?.cardPacks.map((cardPack) => {
-                    return <tr>
-                        <td>{cardPack.name}</td>
-                        <td>{cardPack.cardsCount}</td>
-                        <td>{cardPack.updated}</td>
-                        <td>{cardPack.user_name}</td>
-                        <td>
-                            <button>Delete</button>
-                            <button>Edit</button>
-                            <button>Learn</button>
-                        </td>
-                    </tr>
-                })
+            {packs?.cardPacks.map((cardPack,index) => {
+                return <tr key={index}>
+                    <td>{cardPack.name}</td>
+                    <td>{cardPack.cardsCount}</td>
+                    <td>{cardPack.updated}</td>
+                    <td>{cardPack.user_name}</td>
+                    <td>
+                        {/*{cardPack.user_id === userId ?*/}
+                        {/*    <Fragment>*/}
+                                <button onClick={()=>onDelete(cardPack._id)}>Delete</button>
+                                <button onClick={()=>onEdit(cardPack._id)}>Edit</button>
+                        {/*    </Fragment> : null*/}
+                        {/*}*/}
+                        <button>Learn</button>
+                    </td>
+                </tr>
+            })
             }
             </tbody>
         </table>

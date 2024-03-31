@@ -3,7 +3,7 @@ import {Input} from "../../components/Input";
 import {Button} from "../../components/Button";
 import {Table} from "../../components/Table";
 import {Sidebar} from "../../components/Sidebar";
-import {createPackTC, getPacksTC, InitialPacksState} from "../../store/packsReducer.ts";
+import {createPackTC, deletePackTC, getPacksTC, InitialPacksState, updatePackTC} from "../../store/packsReducer.ts";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../store";
 import {useEffect, useState} from "react";
@@ -12,6 +12,10 @@ import {Modal} from "../../components/Modal";
 
 
 export const PackList = () => {
+    const [selectedPackId, setSelectedPackId] = useState('')
+    const [isUpdateOpen, setIsUpdateOpen] = useState(false)
+
+    const [newUpdatePackName, setNewUpdatePackName] = useState('')
     const [isPrivate, setIsPrivate] = useState(false)
     const [deckCover, setDeckCover] = useState('')
     const [newPackName, setNewPackName] = useState('')
@@ -28,13 +32,23 @@ export const PackList = () => {
         const userId = localStorage.getItem('userId')
         if (userId) {
             dispatch(getPacksTC({
-                // user_id:userId
+                pageCount: 8,
             }))
         } else navigate('/login')
     }, [])
 
     const addNewPack = () => {
         dispatch(createPackTC({cardsPack: {name: newPackName, deckCover: deckCover, private: isPrivate}}))
+    }
+
+    const deletePack = (packId: string) => {
+        dispatch(deletePackTC({id: packId}))
+    }
+
+    const updatePackName = () => {
+        if(selectedPackId){
+            dispatch(updatePackTC({cardsPack:{_id:selectedPackId,name:newUpdatePackName}}))
+        }
     }
 
     return (
@@ -53,7 +67,32 @@ export const PackList = () => {
                             Add new pack-list
                         </Button>
                     </div>
-                    <Table packs={packs}/>
+                    <Table
+                        packs={packs}
+                        onDelete={(packId) => deletePack(packId)}
+                        onEdit={(packId) => {
+                            setIsUpdateOpen(true);
+                            setSelectedPackId(packId)
+                        }}
+                    />
+                    <Modal
+                        modalContent={styles.modalContent}
+                        isOpen={isUpdateOpen}
+                        onClose={() => {
+                            setIsUpdateOpen(false)
+                            setNewUpdatePackName('')
+                        }
+                        }
+                    >
+                        <Input value={newUpdatePackName} label={"Name"}
+                               onChange={(e) => setNewUpdatePackName(e.target.value)}/>
+                        <Button className={styles.button}
+                                onClick={updatePackName}
+                                variant={"primary"}
+                        >
+                            Update
+                        </Button>
+                    </Modal>
                     <Modal
                         modalContent={styles.modalContent}
                         isOpen={isOpen}
@@ -72,7 +111,7 @@ export const PackList = () => {
                             <input type="checkbox" checked={isPrivate}
                                    onChange={(e) => setIsPrivate(e.target.checked)}/>
                         </label>
-                        <Button className={styles.createButton}
+                        <Button className={styles.button}
                                 onClick={addNewPack}
                                 variant={"primary"}
                         >
